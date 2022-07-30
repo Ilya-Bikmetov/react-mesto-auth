@@ -2,7 +2,8 @@
   width: 100%;
   max-width: 120px;
   min-height: 120px;
-  background: url(../../../../images/reg_success.svg);
+  /* background: url(../../../../images/reg_success.svg); */
+  background: url('#');
   background-repeat: no-repeat;
   margin-bottom: 32px;
 }

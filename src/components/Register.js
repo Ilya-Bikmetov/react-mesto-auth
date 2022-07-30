@@ -1,7 +1,7 @@
 import InfoTooltip from "./InfoTooltip.js";
-import {useState} from 'react';
+import { useState } from 'react';
 
-function Register({onClose, isOpen}) {
+function Register({ onClose, isOpen }) {
 
 
   return (
@@ -25,7 +25,12 @@ function Register({onClose, isOpen}) {
         <button className="profile-form__btn" type="submit" aria-label="Зарегистрироваться">Зарегистрироваться</button>
         <a href="#" className="profile-form__submit-subtitle">Уже зарегистрированы? Войти</a>
       </form>
-      <InfoTooltip onClose={onClose} isOpen={isOpen} title ={'Вы успешно зарегистрировались!'}/>
+      <InfoTooltip
+        onClose={onClose}
+        isOpen={isOpen}
+        title={'Вы успешно зарегистрировались!'}
+        urlImg={'../../../../images/reg_success.svg'}
+      />
     </>
   );
 }

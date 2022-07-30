@@ -19,7 +19,7 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupState] = useState(false);
   const [isDeleteCardPopupOpen, setDeleteCardPopupOpenState] = useState(false);
   const [isImageCardPopupOpen, setImageCardPopupOpenState] = useState(false);
-  const [isRegSuccess, setRegSuccess] = useState(true);
+  const [isRegSuccess, setRegSuccess] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({ name: '', about: '', avatar: '' });
   const [cards, setCards] = useState([]);
@@ -143,7 +143,7 @@ function App() {
         <CurrentUserContext.Provider value={currentUser}>
           <Header />
           <Switch>
-            <Route path="/page">
+            <Route exact path="/">
               <Main
                 onEditProfile={handleEditProfileClick}
                 onAddPlace={handleAddPlaceClick}
@@ -159,7 +159,7 @@ function App() {
             <Route path="/sign-in">
               <Login />
             </Route>
-            <Route path="/">
+            <Route path="/sign-up">
               <Register isOpen={isRegSuccess} />
             </Route>
           </Switch>
