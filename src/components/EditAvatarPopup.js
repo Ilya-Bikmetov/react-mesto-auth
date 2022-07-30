@@ -3,7 +3,6 @@ import PopupWithForm from "./PopupWithForm.js";
 
 export default function EditAvatarPopup({ isOpen, onUpdateAvatar, onClose }) {
   const avatarLink = useRef();
-  console.log(avatarLink);
   const [buttonSubmitName, setButtonSubmitName] = useState('Сохранить');
 
   const handleSubmit = (e) => {
