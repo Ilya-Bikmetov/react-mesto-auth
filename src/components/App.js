@@ -13,13 +13,13 @@ import DeleteCardPopup from './DeleteCardPopup.js';
 import Login from './Login.js';
 import Register from './Register.js';
 
-
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupState] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupState] = useState(false);
   const [isEditAvatarPopupOpen, setEditAvatarPopupState] = useState(false);
   const [isDeleteCardPopupOpen, setDeleteCardPopupOpenState] = useState(false);
   const [isImageCardPopupOpen, setImageCardPopupOpenState] = useState(false);
+  const [isRegSuccess, setRegSuccess] = useState(true);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({ name: '', about: '', avatar: '' });
   const [cards, setCards] = useState([]);
@@ -93,6 +93,7 @@ function App() {
     isEditAvatarPopupOpen && setEditAvatarPopupState(false);
     isDeleteCardPopupOpen && setDeleteCardPopupOpenState(false);
     isImageCardPopupOpen && setImageCardPopupOpenState(false);
+    isRegSuccess && setRegSuccess(false);
   }
 
   function handleEscClose(evt) {
@@ -142,7 +143,7 @@ function App() {
         <CurrentUserContext.Provider value={currentUser}>
           <Header />
           <Switch>
-            <Route exact path="/">
+            <Route path="/page">
               <Main
                 onEditProfile={handleEditProfileClick}
                 onAddPlace={handleAddPlaceClick}
@@ -158,11 +159,10 @@ function App() {
             <Route path="/sign-in">
               <Login />
             </Route>
-            <Route path="/sign-up">
-              <Register />
+            <Route path="/">
+              <Register isOpen={isRegSuccess} />
             </Route>
           </Switch>
-
 
           <EditProfilePopup
             isOpen={isEditProfilePopupOpen}

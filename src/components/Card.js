@@ -17,7 +17,7 @@ function Card({ card, onCardClick, onCardLike, onCardDelete }) {
           ? { visibility: "visible" }
           : { visibility: "hidden" }
       }></button>
-      <img onClick={handleClick} src={card.link} alt={card.name} className="element__photo" />
+      <div onClick={handleClick} src={card.link} alt={card.name} className="element__photo" />
       <div className="element__sign">
         <h2 className="element__title">{card.name}</h2>
         <button className={
