@@ -20,12 +20,12 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupState] = useState(false);
   const [isDeleteCardPopupOpen, setDeleteCardPopupOpenState] = useState(false);
   const [isImageCardPopupOpen, setImageCardPopupOpenState] = useState(false);
-  const [isRegSuccess, setRegSuccess] = useState(true);
-  const [isLoginIssue, setLoginIssue] = useState(true);
+  const [isRegSuccess, setRegSuccess] = useState(false);
+  const [isLoginIssue, setLoginIssue] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({ name: '', about: '', avatar: '' });
   const [cards, setCards] = useState([]);
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -144,7 +144,7 @@ function App() {
     <div className="root">
       <div className="page">
         <CurrentUserContext.Provider value={currentUser}>
-          <Header />
+          <Header loggedIn={loggedIn} />
           <Switch>
             <ProtectedRoute
               exact path="/"

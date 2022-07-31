@@ -1,3 +1,4 @@
+import {Link} from "react-router-dom";
 import InfoTooltip from "./InfoTooltip.js";
 import successImagePath from "../images/reg_success.svg";
 
@@ -24,7 +25,7 @@ function Register({ onClose, isOpen }) {
           required
         />
         <button className="profile-form__btn" type="submit" aria-label="Зарегистрироваться">Зарегистрироваться</button>
-        <a href="#" className="profile-form__submit-subtitle">Уже зарегистрированы? Войти</a>
+        <Link to={"./sign-in"} className="profile-form__submit-subtitle">Уже зарегистрированы? Войти</Link>
       </form>
       <InfoTooltip
         onClose={onClose}
