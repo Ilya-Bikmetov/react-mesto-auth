@@ -1,5 +1,6 @@
 import InfoTooltip from "./InfoTooltip.js";
-import { useState } from 'react';
+import successImagePath from "../images/reg_success.svg";
+
 
 function Register({ onClose, isOpen }) {
 
@@ -29,7 +30,7 @@ function Register({ onClose, isOpen }) {
         onClose={onClose}
         isOpen={isOpen}
         title={'Вы успешно зарегистрировались!'}
-        urlImg={'../../../../images/reg_success.svg'}
+        urlImg={`${successImagePath}`}
       />
     </>
   );

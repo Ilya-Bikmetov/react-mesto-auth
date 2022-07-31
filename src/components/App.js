@@ -12,6 +12,7 @@ import AddPlacePopup from './AddPlacePopup.js';
 import DeleteCardPopup from './DeleteCardPopup.js';
 import Login from './Login.js';
 import Register from './Register.js';
+import ProtectedRoute from './ProtectedRoute.js';
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupState] = useState(false);
@@ -19,7 +20,8 @@ function App() {
   const [isEditAvatarPopupOpen, setEditAvatarPopupState] = useState(false);
   const [isDeleteCardPopupOpen, setDeleteCardPopupOpenState] = useState(false);
   const [isImageCardPopupOpen, setImageCardPopupOpenState] = useState(false);
-  const [isRegSuccess, setRegSuccess] = useState(false);
+  const [isRegSuccess, setRegSuccess] = useState(true);
+  const [isLoginIssue, setLoginIssue] = useState(true);
   const [selectedCard, setSelectedCard] = useState({});
   const [currentUser, setCurrentUser] = useState({ name: '', about: '', avatar: '' });
   const [cards, setCards] = useState([]);
@@ -94,6 +96,7 @@ function App() {
     isDeleteCardPopupOpen && setDeleteCardPopupOpenState(false);
     isImageCardPopupOpen && setImageCardPopupOpenState(false);
     isRegSuccess && setRegSuccess(false);
+    isLoginIssue && setLoginIssue(false);
   }
 
   function handleEscClose(evt) {
@@ -108,7 +111,7 @@ function App() {
   }
 
   useEffect(() => {
-    if (isEditProfilePopupOpen || isAddPlacePopupOpen || isEditAvatarPopupOpen || isDeleteCardPopupOpen || isImageCardPopupOpen) {
+    if (isEditProfilePopupOpen || isAddPlacePopupOpen || isEditAvatarPopupOpen || isDeleteCardPopupOpen || isImageCardPopupOpen || isRegSuccess || isLoginIssue) {
       document.addEventListener('mousedown', handleMouseClickClose);
       document.addEventListener('keydown', handleEscClose);
 
@@ -117,7 +120,7 @@ function App() {
         document.removeEventListener('mousedown', handleMouseClickClose);
       };
     }
-  }, [isEditProfilePopupOpen, isAddPlacePopupOpen, isEditAvatarPopupOpen, isDeleteCardPopupOpen, isImageCardPopupOpen]);
+  }, [isEditProfilePopupOpen, isAddPlacePopupOpen, isEditAvatarPopupOpen, isDeleteCardPopupOpen, isImageCardPopupOpen, isRegSuccess, isLoginIssue]);
 
   useEffect(() => {
     api.getUser('users/me')
@@ -143,24 +146,29 @@ function App() {
         <CurrentUserContext.Provider value={currentUser}>
           <Header />
           <Switch>
-            <Route exact path="/">
-              <Main
-                onEditProfile={handleEditProfileClick}
-                onAddPlace={handleAddPlaceClick}
-                onEditAvatar={handleEditAvatarClick}
-                onDeleteCard={handleDeleteCardClick}
-                onCardClick={handleCardClick}
-                onCardLike={handleCardLike}
-                onCardDelete={handleTrashClick}
-                cards={cards}
-              />
+            <ProtectedRoute
+              exact path="/"
+              component={Main}
+              loggedIn={loggedIn}
+              onEditProfile={handleEditProfileClick}
+              onAddPlace={handleAddPlaceClick}
+              onEditAvatar={handleEditAvatarClick}
+              onDeleteCard={handleDeleteCardClick}
+              onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
+              onCardDelete={handleTrashClick}
+              cards={cards}
+            >
               <Footer />
-            </Route>
+            </ProtectedRoute>
             <Route path="/sign-in">
-              <Login />
+              <Login isOpen={isLoginIssue} onClose={closeAllPopups} />
             </Route>
             <Route path="/sign-up">
-              <Register isOpen={isRegSuccess} />
+              <Register isOpen={isRegSuccess} onClose={closeAllPopups} />
+            </Route>
+            <Route path="*">
+              <Redirect to={"./sign-in"} />
             </Route>
           </Switch>
 
