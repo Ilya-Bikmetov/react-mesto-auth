@@ -13,6 +13,7 @@ import DeleteCardPopup from './DeleteCardPopup.js';
 import Login from './Login.js';
 import Register from './Register.js';
 import ProtectedRoute from './ProtectedRoute.js';
+import * as auth from "../utils/Auth.js";
 
 function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupState] = useState(false);
@@ -56,6 +57,7 @@ function App() {
   const handleEditAvatarClick = () => setEditAvatarPopupState(true);
   const handleDeleteCardClick = () => setDeleteCardPopupOpenState(true);
   const handleImageCardClick = () => setImageCardPopupOpenState(true);
+  const handleRegPopup = () => setRegSuccess(true);
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -87,6 +89,10 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => console.log(err));
+  }
+
+  const handleSignInSubmit = ({ email, password }) => {
+    return auth.signup({ email, password });
   }
 
   const closeAllPopups = () => {
@@ -165,7 +171,12 @@ function App() {
               <Login isOpen={isLoginIssue} onClose={closeAllPopups} />
             </Route>
             <Route path="/sign-up">
-              <Register isOpen={isRegSuccess} onClose={closeAllPopups} />
+              <Register
+                isOpen={isRegSuccess}
+                onClose={closeAllPopups}
+                onSubmit={handleSignInSubmit}
+                handleRegPopup={handleRegPopup}
+              />
             </Route>
             <Route path="*">
               <Redirect to={"./sign-in"} />
