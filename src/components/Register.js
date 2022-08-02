@@ -1,10 +1,10 @@
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import InfoTooltip from "./InfoTooltip.js";
 import successImagePath from "../images/reg_success.svg";
 
 
-function Register({ onClose, isOpen, onSubmit, handleRegPopup }) {
+function Register({ onClose, isOpen, onSubmit }) {
   const [inputData, setInputData] = useState({ email: '', password: '' });
 
   const handleInputChange = (e) => {
@@ -18,13 +18,12 @@ function Register({ onClose, isOpen, onSubmit, handleRegPopup }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ email: inputData.email, password: inputData.password })
-      .then((res) => {
-        res && handleRegPopup();
-        setInputData({ email: '', password: '' });
-      })
-      .catch((err) => console.log(err));
+    onSubmit({ email: inputData.email, password: inputData.password });
   }
+
+  useEffect(() => {
+   isOpen && setInputData({ email: '', password: '' });
+  }, [isOpen])
 
   return (
     <>

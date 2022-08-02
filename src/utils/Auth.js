@@ -7,7 +7,7 @@ const checkResponse = (res) => {
   if (res.ok)
     return res.json();
 
-  return Promise.reject(`Возникла ошибка ${res.status}: ${res.statusText}`);
+  return Promise.reject(`Возникла ошибка ${res.status}`);
 }
 
 
@@ -20,4 +20,11 @@ export const signup = ({ email, password }) => {
     .then((res) => checkResponse(res))
 }
 
-
+export const signin = ({ email, password }) => {
+  return fetch(`${baseUrl}/signin`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify({ email, password }),
+  })
+    .then((res) => checkResponse(res))
+}

@@ -57,7 +57,6 @@ function App() {
   const handleEditAvatarClick = () => setEditAvatarPopupState(true);
   const handleDeleteCardClick = () => setDeleteCardPopupOpenState(true);
   const handleImageCardClick = () => setImageCardPopupOpenState(true);
-  const handleRegPopup = () => setRegSuccess(true);
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
@@ -91,8 +90,23 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-  const handleSignInSubmit = ({ email, password }) => {
-    return auth.signup({ email, password });
+  const handleSignupSubmit = ({ email, password }) => {
+    auth.signup({ email, password })
+      .then((res) => {
+        res && setRegSuccess(true);
+      })
+      .catch((err) => console.log(err));
+  }
+
+  const handleSigninSubmit = ({ email, password }) => {
+    auth.signin({ email, password })
+      .then((res) => {
+        console.log(res); //убрать, здесь приходит token
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoginIssue(true);
+      });
   }
 
   const closeAllPopups = () => {
@@ -168,14 +182,17 @@ function App() {
               <Footer />
             </ProtectedRoute>
             <Route path="/sign-in">
-              <Login isOpen={isLoginIssue} onClose={closeAllPopups} />
+              <Login
+                isOpen={isLoginIssue}
+                onClose={closeAllPopups}
+                onSubmit={handleSigninSubmit}
+              />
             </Route>
             <Route path="/sign-up">
               <Register
                 isOpen={isRegSuccess}
                 onClose={closeAllPopups}
-                onSubmit={handleSignInSubmit}
-                handleRegPopup={handleRegPopup}
+                onSubmit={handleSignupSubmit}
               />
             </Route>
             <Route path="*">
