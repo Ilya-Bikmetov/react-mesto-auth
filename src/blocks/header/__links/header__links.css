@@ -1,4 +1,6 @@
 .header__links {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
+  gap: 24px;
 }

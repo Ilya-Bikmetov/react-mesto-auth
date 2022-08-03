@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
-function Header({ loggedIn }) {
+function Header({ loggedIn, userInfo: { email } }) {
   const location = useLocation();
 
   return (
@@ -20,8 +20,8 @@ function Header({ loggedIn }) {
           {
             location.pathname === "/" &&
             <nav className="header__links">
-              <Link className="header__link" to={"./sign-up"}>email@mail.com</Link>
-              <Link className="header__link" to={"./sign-in"}>Выйти</Link>
+              <p className="header__link header__links_text">{email}</p>
+              <Link onClick={() => localStorage.removeItem('token')} className="header__link" to={"./sign-in"}>Выйти</Link>
             </nav>
           }
         </div>

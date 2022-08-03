@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory } from 'react-router-dom';
 import Footer from "./Footer.js";
 import Header from "./Header.js";
 import ImagePopup from "./ImagePopup.js";
@@ -27,6 +27,9 @@ function App() {
   const [currentUser, setCurrentUser] = useState({ name: '', about: '', avatar: '' });
   const [cards, setCards] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [userInfo, setUserInfo] = useState({ email: '' });
+
+  const history = useHistory();
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
@@ -100,8 +103,11 @@ function App() {
 
   const handleSigninSubmit = ({ email, password }) => {
     auth.signin({ email, password })
-      .then((res) => {
-        console.log(res); //убрать, здесь приходит token
+      .then(({ token }) => {
+        localStorage.setItem('token', token);
+        setLoggedIn(true);
+        setUserInfo({ email });
+        history.push('./')
       })
       .catch((err) => {
         console.log(err);
@@ -160,11 +166,30 @@ function App() {
 
   }, []);
 
+  useEffect(() => {
+    if (localStorage.getItem('token'))
+      auth.getContent(localStorage.getItem('token'))
+        .then(({ data: { email } }) => {
+          if (email) {
+            setLoggedIn(true);
+            setUserInfo({ email });
+          }
+        })
+        .catch((err) => console.log(err));
+  }, []);
+
+  useEffect(() => {
+    if(loggedIn) history.push('./');
+  }, [loggedIn]);
+
   return (
     <div className="root">
       <div className="page">
         <CurrentUserContext.Provider value={currentUser}>
-          <Header loggedIn={loggedIn} />
+          <Header
+            loggedIn={loggedIn}
+            userInfo={userInfo}
+          />
           <Switch>
             <ProtectedRoute
               exact path="/"
