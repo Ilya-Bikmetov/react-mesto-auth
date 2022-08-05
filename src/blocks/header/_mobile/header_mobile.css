@@ -1,6 +1,7 @@
 @media (max-width: 599px) {
-  .header_transform {
+  .header_mobile {
     flex-direction: column;
     flex-flow: column-reverse;
+    align-items: center;
   }
 }

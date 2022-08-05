@@ -6,6 +6,7 @@
   text-align: right;
   text-decoration: none;
   transition: opacity .5s ease-in-out;
+  margin: 0;
 }
 
 .header__link:hover {

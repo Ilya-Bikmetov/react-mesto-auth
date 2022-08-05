@@ -11,8 +11,7 @@
 
 @media (max-width: 599px) {
   .header {
-    padding-top: 28px;
-    /* flex-direction: column;
-    flex-flow: column-reverse; */
+    padding-top: 40px;
+
   }
 }

@@ -1,0 +1,7 @@
+@media (max-width: 599px) {
+  .header__btn_open {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+}

@@ -1,0 +1,12 @@
+@media (max-width: 599px) {
+  .header__links_mobile {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin-right: 0;
+    gap: 18px;
+    padding-bottom: 40px;
+    margin-bottom: 27px;
+    border-bottom: 1px solid rgba(84, 84, 84, .7);
+  }
+}
