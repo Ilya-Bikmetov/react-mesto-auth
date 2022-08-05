@@ -1,13 +1,7 @@
 .header__container {
   width: 100%;
-  margin-bottom: 41px;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-@media (max-width: 599px) {
-  .header__container {
-    margin-bottom: 31px;
-  }
-}

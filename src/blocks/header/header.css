@@ -4,14 +4,17 @@
   border-bottom: 1px solid rgba(84, 84, 84, .7);
   margin: 0 auto;
   padding-top: 45px;
+  padding-bottom: 41px;
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
 }
 
 @media (max-width: 599px) {
   .header {
     padding-top: 40px;
-
+    padding-bottom: 31px;
+    flex-direction: column;
+    flex-flow: column-reverse;
   }
 }
