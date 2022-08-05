@@ -66,6 +66,11 @@ function App() {
     handleImageCardClick();
   }
 
+  const handleSignout = () => {
+    localStorage.removeItem('token');
+    setLoggedIn(false);
+  }
+
   const handleUpdateUser = ({ name, about }) => {
     api.addUser({ name, about }, 'users/me')
       .then((user) => {
@@ -189,6 +194,7 @@ function App() {
           <Header
             loggedIn={loggedIn}
             userInfo={userInfo}
+            onSignout={handleSignout}
           />
           <Switch>
             <ProtectedRoute

@@ -1,0 +1,6 @@
+@media (max-width: 599px) {
+  .header_transform {
+    flex-direction: column;
+    flex-flow: column-reverse;
+  }
+}

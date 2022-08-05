@@ -1,33 +1,36 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 
-function Header({ loggedIn, userInfo: { email } }) {
+function Header({ loggedIn, userInfo: { email }, onSignout }) {
   const location = useLocation();
 
   return (
-    <header className="header">
-      <div className="header__logo"></div>
+    // <header className="header">
+    //   <div className="header__logo"></div>
+    <div>
       {
         !loggedIn &&
-        <nav className="header__links">
-          {location.pathname === "/sign-in" && <Link className="header__link" to={"./sign-up"}>Регистрация</Link>}
-          {location.pathname === "/sign-up" && <Link className="header__link" to={"./sign-in"}>Войти</Link>}
-        </nav>
-
+        <header className="header">
+          <div className="header__logo"></div>
+          <nav className="header__links">
+            {location.pathname === "/sign-in" && <Link className="header__link" to={"./sign-up"}>Регистрация</Link>}
+            {location.pathname === "/sign-up" && <Link className="header__link" to={"./sign-in"}>Войти</Link>}
+          </nav>
+        </header>
       }
+
       {
         loggedIn &&
-        <div>
-          {
-            location.pathname === "/" &&
+        <header className="header header_transform">
+          <div className="header__logo"></div>
+          {location.pathname === "/" &&
             <nav className="header__links">
-              <p className="header__link header__links_text">{email}</p>
-              <Link onClick={() => localStorage.removeItem('token')} className="header__link" to={"./sign-in"}>Выйти</Link>
-            </nav>
-          }
-        </div>
+              <p className="header__link header__link_text">{email}</p>
+              <Link onClick={onSignout} className="header__link" to={"./sign-in"}>Выйти</Link>
+            </nav>}
+        </header>
       }
+    </div>
 
-    </header>
   );
 }
 

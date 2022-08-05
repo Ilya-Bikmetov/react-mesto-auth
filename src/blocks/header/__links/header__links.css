@@ -4,3 +4,9 @@
   align-items: baseline;
   gap: 24px;
 }
+
+@media (max-width: 599px) {
+  .header__links {
+    margin-right: 30px;
+  }
+}
