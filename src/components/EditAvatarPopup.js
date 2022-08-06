@@ -1,16 +1,12 @@
-import { useState,useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import PopupWithForm from "./PopupWithForm.js";
 
-export default function EditAvatarPopup({ isOpen, onUpdateAvatar, onClose }) {
+export default function EditAvatarPopup({ isOpen, onUpdateAvatar, onClose, buttonSubmitName }) {
   const avatarLink = useRef();
-  const [buttonSubmitName, setButtonSubmitName] = useState('Сохранить');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const buttonSubmitDefaultName = buttonSubmitName;
-    setButtonSubmitName('Cохранение...')
     onUpdateAvatar(avatarLink.current.value);
-    setTimeout(() => setButtonSubmitName(buttonSubmitDefaultName), 800);
   }
 
   useEffect(() => {

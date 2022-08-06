@@ -1,15 +1,10 @@
-import { useState } from "react";
 import PopupWithForm from "./PopupWithForm.js";
 
-function DeleteCardPopup({ isOpen, onClose, onSubmit, card }) {
-  const [buttonSubmitName, setButtonSubmitName] = useState('Да');
+function DeleteCardPopup({ isOpen, onClose, onSubmit, card, buttonSubmitName }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const buttonSubmitDefaultName = buttonSubmitName;
-    setButtonSubmitName('Удаление...')
     onSubmit(card);
-    setTimeout(() => setButtonSubmitName(buttonSubmitDefaultName), 2000);
   }
 
   return (

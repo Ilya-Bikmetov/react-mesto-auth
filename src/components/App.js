@@ -41,12 +41,14 @@ function App() {
   }
 
   function handleCardDelete(card) {
+    setIsLoading(true);
     api.deleteCard(`cards/${card._id}`)
       .then(() => {
         setCards((cards) => cards.filter((c) => c._id !== card._id));
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
   }
 
   const handleTrashClick = (card) => {
@@ -54,13 +56,6 @@ function App() {
     setDeleteCardPopupOpenState(true);
   }
 
-
-  const handleLoadingBtn = () => {
-    isLoading
-    ? setIsLoading(false)
-    : setIsLoading(true)
-  }
-  const submitCardDelete = (card) => handleCardDelete(card);
   const handleEditProfileClick = () => setEditProfilePopupState(true);
   const handleAddPlaceClick = () => setAddPlacePopupState(true);
   const handleEditAvatarClick = () => setEditAvatarPopupState(true);
@@ -78,30 +73,36 @@ function App() {
   }
 
   const handleUpdateUser = ({ name, about }) => {
+    setIsLoading(true);
     api.addUser({ name, about }, 'users/me')
       .then((user) => {
         setCurrentUser(user);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
   }
 
   const handleUpdateAvatar = (avatarLink) => {
+    setIsLoading(true);
     api.setAvatar('users/me/avatar', avatarLink)
       .then((user) => {
         setCurrentUser(user);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
   }
 
   const handleAddPlaceSubmit = ({ name, link }) => {
+    setIsLoading(true);
     api.addCard({ name, link, url: 'cards' })
       .then((card) => {
         setCards([card, ...cards]);
         closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
   }
 
   const handleSignupSubmit = ({ email, password }) => {
@@ -118,7 +119,6 @@ function App() {
         localStorage.setItem('token', token);
         setLoggedIn(true);
         setUserInfo({ email });
-        history.push('./')
       })
       .catch((err) => {
         console.log(err);
@@ -190,8 +190,8 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if(loggedIn) history.push('./');
-  }, [loggedIn]);
+    loggedIn && history.push('./');
+  }, [loggedIn, history]);
 
   return (
     <div className="root">
@@ -238,12 +238,14 @@ function App() {
           </Switch>
 
           <EditProfilePopup
+            buttonSubmitName={isLoading ? 'Cохранение...' : 'Сохранить'}
             isOpen={isEditProfilePopupOpen}
             onUpdateUser={handleUpdateUser}
             onClose={closeAllPopups}
           />
         </CurrentUserContext.Provider>
         <EditAvatarPopup
+          buttonSubmitName={isLoading ? 'Cохранение...' : 'Сохранить'}
           isOpen={isEditAvatarPopupOpen}
           onUpdateAvatar={handleUpdateAvatar}
           onClose={closeAllPopups}
@@ -254,17 +256,17 @@ function App() {
           onClose={closeAllPopups}
         />
         <AddPlacePopup
-          handleLoadingBtn={handleLoadingBtn}
           buttonSubmitName={isLoading ? 'Cохранение...' : 'Создать'}
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onSubmit={handleAddPlaceSubmit}
         />
         <DeleteCardPopup
+          buttonSubmitName={isLoading ? 'Удаление...' : 'Да'}
           card={selectedCard}
           isOpen={isDeleteCardPopupOpen}
           onClose={closeAllPopups}
-          onSubmit={submitCardDelete}
+          onSubmit={handleCardDelete}
         />
       </div>
     </div>
