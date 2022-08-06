@@ -1,15 +1,9 @@
+import { checkResponse } from "./utils";
+
 export const baseUrl = 'https://auth.nomoreparties.co';
 const headers = {
   "Content-Type": "application/json",
 };
-
-const checkResponse = (res) => {
-  if (res.ok)
-    return res.json();
-
-  return Promise.reject(`Возникла ошибка ${res.status}`);
-}
-
 
 export const signup = ({ email, password }) => {
   return fetch(`${baseUrl}/signup`, {

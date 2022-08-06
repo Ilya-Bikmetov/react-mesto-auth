@@ -1,17 +1,11 @@
 import { apiConfig } from "./constants.js";
+import { checkResponse } from "./utils.js";
 
 class Api {
   constructor(config) {
     this._baseUrl = config.baseUrl;
     this._headers = config.headers;
-  }
-
-  _checkResponse(res) {
-    if (res.ok)
-      return res.json();
-
-    return Promise.reject(`Возникла ошибка ${res.status}`);
-
+    this._checkResponse = checkResponse;
   }
 
   getUser(url) {

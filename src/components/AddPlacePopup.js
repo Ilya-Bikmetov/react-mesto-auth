@@ -1,17 +1,19 @@
 import PopupWithForm from './PopupWithForm.js';
 import { useEffect, useState } from 'react';
 
-function AddPlacePopup({ isOpen, onClose, onSubmit }) {
+function AddPlacePopup({ isOpen, onClose, onSubmit, handleLoadingBtn, buttonSubmitName }) {
   const [placeName, setPlaceName] = useState('');
   const [placeLink, setPlaceLink] = useState('');
-  const [buttonSubmitName, setButtonSubmitName] = useState('Создать');
+  console.log(`Начальное состояние ${buttonSubmitName}`);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const buttonSubmitDefaultName = buttonSubmitName;
-    setButtonSubmitName('Cохранение...')
+    console.log(`До 1-го вызова после submit ${buttonSubmitName}`);
+    handleLoadingBtn();
+    console.log(`До вызова setTimeout ${buttonSubmitName}`);
     onSubmit({ name: placeName, link: placeLink });
-    setTimeout(() => setButtonSubmitName(buttonSubmitDefaultName), 2000);
+    setTimeout(() => { handleLoadingBtn(); console.log(buttonSubmitName); }, 2000);
+
   }
 
   const handlePlaceName = (e) => setPlaceName(e.target.value);

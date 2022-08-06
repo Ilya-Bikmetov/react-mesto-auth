@@ -1,5 +1,6 @@
 function PopupWithForm({ name, title, isOpen, onClose, onSubmit, children, buttonText }) {
 
+  console.log(`Состояние кнопки в PopupWithForm ${buttonText}`);
   return (
       <div className={`popup popup_${name} ${isOpen && 'popup_active'}`}>
         <form onSubmit={onSubmit} className="popup__content" name={`${name}`}>

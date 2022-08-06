@@ -17,7 +17,7 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike
           <div className="profile__info">
             <div className="profile__name">
               <h1 className="profile__title">{currentUser.name}</h1>
-              <button onClick={onEditProfile} type="button" aria-label="Редактировать" className="profile__edit-button"></button>
+              <button onClick={onEditProfile} type="button" aria-label="Редактировать" className="profile__edit-button"/>
             </div>
             <p className="profile__subtitle">{currentUser.about}</p>
           </div>

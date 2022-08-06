@@ -33,8 +33,8 @@ function Header({ loggedIn, userInfo: { email }, onSignout }) {
               aria-label="Открыть профиль"
             >
               <div className="header__btn__element" />
-              <div className="header__btn__element" />
-              <div className="header__btn__element" />
+              {/* <div className="header__btn__element" />
+              <div className="header__btn__element" /> */}
             </button>
             <button
               onClick={handleCloseProfile}

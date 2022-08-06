@@ -28,6 +28,7 @@ function App() {
   const [cards, setCards] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [userInfo, setUserInfo] = useState({ email: '' });
+  const [isLoading, setIsLoading] = useState(false);
 
   const history = useHistory();
 
@@ -53,8 +54,13 @@ function App() {
     setDeleteCardPopupOpenState(true);
   }
 
-  const submitCardDelete = (card) => handleCardDelete(card);
 
+  const handleLoadingBtn = () => {
+    isLoading
+    ? setIsLoading(false)
+    : setIsLoading(true)
+  }
+  const submitCardDelete = (card) => handleCardDelete(card);
   const handleEditProfileClick = () => setEditProfilePopupState(true);
   const handleAddPlaceClick = () => setAddPlacePopupState(true);
   const handleEditAvatarClick = () => setEditAvatarPopupState(true);
@@ -248,6 +254,8 @@ function App() {
           onClose={closeAllPopups}
         />
         <AddPlacePopup
+          handleLoadingBtn={handleLoadingBtn}
+          buttonSubmitName={isLoading ? 'Cохранение...' : 'Создать'}
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
           onSubmit={handleAddPlaceSubmit}
