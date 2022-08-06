@@ -23,7 +23,7 @@ function Header({ loggedIn, userInfo: { email }, onSignout }) {
 
       {
         loggedIn &&
-        <header className="header">
+        <header className="header header_mobile">
           <div className="header__container">
             <div className="header__logo" />
             <button
@@ -33,8 +33,6 @@ function Header({ loggedIn, userInfo: { email }, onSignout }) {
               aria-label="Открыть профиль"
             >
               <div className="header__btn__element" />
-              {/* <div className="header__btn__element" />
-              <div className="header__btn__element" /> */}
             </button>
             <button
               onClick={handleCloseProfile}
@@ -44,7 +42,7 @@ function Header({ loggedIn, userInfo: { email }, onSignout }) {
             />
           </div>
           {location.pathname === "/" &&
-            <nav className={`header__links ${!isClicked && 'header__links_off'}`}>
+            <nav className={`header__links ${!isClicked && 'header__links_off'} header__links_mobile`}>
               <p className="header__link header__link_text">{email}</p>
               <Link onClick={onSignout} className="header__link" to={"./sign-in"}>Выйти</Link>
             </nav>}

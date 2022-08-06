@@ -4,6 +4,7 @@
 @import url(./blocks/root/_scroll/root_scroll.css);
 @import url(./blocks/page/page.css);
 @import url(./blocks/header/header.css);
+@import url(./blocks/header/_mobile/header_mobile.css);
 @import url(./blocks/header/__container/header__container.css);
 @import url(./blocks/header/__logo/header__logo.css);
 @import url(./blocks/header/__btn/header__btn.css);
@@ -12,6 +13,7 @@
 @import url(./blocks/header/__btn/_off/header__btn_off.css);
 @import url(./blocks/header/__btn/__element/header__btn__element.css);
 @import url(./blocks/header/__links/header__links.css);
+@import url(./blocks/header/__links/_mobile/header__links_mobile.css);
 @import url(./blocks/header/__links/_off/header__links_off.css);
 @import url(./blocks/header/__link/header__link.css);
 @import url(./blocks/header/__link/_text/header__link_text.css);

@@ -1,5 +1,6 @@
 .header__btn {
   display: none;
+  position: relative;
 }
 
 @media (max-width: 599px) {
