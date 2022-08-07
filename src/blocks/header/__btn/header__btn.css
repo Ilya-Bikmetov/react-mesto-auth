@@ -1,6 +1,10 @@
 .header__btn {
   display: none;
-  position: relative;
+  /* position: relative; */
+  /* width: 100%;
+  max-width: 24px; */
+  min-height: 24px;
+  background: transparent;
 }
 
 @media (max-width: 599px) {
