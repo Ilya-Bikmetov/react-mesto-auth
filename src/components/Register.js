@@ -2,9 +2,10 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import InfoTooltip from "./InfoTooltip.js";
 import successImagePath from "../images/reg_success.svg";
+import failLoginPath from "../images/login_issue.svg"
 
 
-function Register({ onClose, isOpen, onSubmit }) {
+function Register({ onClose, isOpen, onSubmit, isFailed }) {
   const [inputData, setInputData] = useState({ email: '', password: '' });
 
   const handleInputChange = (e) => {
@@ -22,7 +23,7 @@ function Register({ onClose, isOpen, onSubmit }) {
   }
 
   useEffect(() => {
-   isOpen && setInputData({ email: '', password: '' });
+    isOpen && setInputData({ email: '', password: '' });
   }, [isOpen])
 
   return (
@@ -55,6 +56,12 @@ function Register({ onClose, isOpen, onSubmit }) {
         isOpen={isOpen}
         title={'Вы успешно зарегистрировались!'}
         urlImg={`${successImagePath}`}
+      />
+      <InfoTooltip
+        onClose={onClose}
+        isOpen={isFailed}
+        title={'Что-то пошло не так! Попробуйте ещё раз.'}
+        urlImg={`${failLoginPath}`}
       />
     </>
   );

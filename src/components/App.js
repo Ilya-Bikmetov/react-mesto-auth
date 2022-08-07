@@ -110,15 +110,21 @@ function App() {
       .then((res) => {
         res && setRegSuccess(true);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setLoginIssue(true);
+      });
   }
 
   const handleSigninSubmit = ({ email, password }) => {
-    auth.signin({ email, password })
-      .then(({ token }) => {
-        localStorage.setItem('token', token);
-        setLoggedIn(true);
-        setUserInfo({ email });
+    Promise.all([auth.signin({ email, password }), api.getInitialCards('cards')])
+      .then(([{ token }, items]) => {
+        if (token) {
+          localStorage.setItem('token', token);
+          setLoggedIn(true);
+          setUserInfo({ email });
+        }
+        items && setCards(items);
       })
       .catch((err) => {
         console.log(err);
@@ -163,15 +169,6 @@ function App() {
     api.getUser('users/me')
       .then((userData) => {
         setCurrentUser(userData);
-      })
-      .catch((err) => console.log(err));
-
-  }, []);
-
-  useEffect(() => {
-    api.getInitialCards('cards')
-      .then((items) => {
-        setCards(items);
       })
       .catch((err) => console.log(err));
 
@@ -228,6 +225,7 @@ function App() {
             <Route path="/sign-up">
               <Register
                 isOpen={isRegSuccess}
+                isFailed={isLoginIssue}
                 onClose={closeAllPopups}
                 onSubmit={handleSignupSubmit}
               />
