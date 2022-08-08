@@ -117,14 +117,11 @@ function App() {
   }
 
   const handleSigninSubmit = ({ email, password }) => {
-    Promise.all([auth.signin({ email, password }), api.getInitialCards('cards')])
-      .then(([{ token }, items]) => {
-        if (token) {
-          localStorage.setItem('token', token);
-          setLoggedIn(true);
-          setUserInfo({ email });
-        }
-        items && setCards(items);
+    auth.signin({ email, password })
+      .then(({ token }) => {
+        localStorage.setItem('token', token);
+        setLoggedIn(true);
+        setUserInfo({ email });
       })
       .catch((err) => {
         console.log(err);
@@ -166,15 +163,6 @@ function App() {
   }, [isEditProfilePopupOpen, isAddPlacePopupOpen, isEditAvatarPopupOpen, isDeleteCardPopupOpen, isImageCardPopupOpen, isRegSuccess, isLoginIssue]);
 
   useEffect(() => {
-    api.getUser('users/me')
-      .then((userData) => {
-        setCurrentUser(userData);
-      })
-      .catch((err) => console.log(err));
-
-  }, []);
-
-  useEffect(() => {
     if (localStorage.getItem('token'))
       auth.getContent(localStorage.getItem('token'))
         .then(({ data: { email } }) => {
@@ -187,7 +175,15 @@ function App() {
   }, []);
 
   useEffect(() => {
-    loggedIn && history.push('./');
+    if (loggedIn) {
+      Promise.all([api.getInitialCards('cards'), api.getUser('users/me')])
+        .then(([items, userData]) => {
+          setCurrentUser(userData);
+          setCards(items);
+          history.push('./');
+        })
+        .catch((err) => console.log(err));
+    }
   }, [loggedIn, history]);
 
   return (
